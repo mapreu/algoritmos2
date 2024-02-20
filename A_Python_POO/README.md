@@ -1,4 +1,4 @@
-# Apéndice A: POO en Python
+# POO en Python
 Esta sección provee una introducción básica sobre ciertos aspectos del lenguaje referidos al **paradigma orientado a objetos** que hemos visto en [Algoritmos 1](https://github.com/mapreu/algoritmos1/tree/main/01_introduccion#conceptos-b%C3%A1sicos-de-la-programaci%C3%B3n-orientada-a-objetos-poo).
 
 ## Convención de nombres
@@ -902,3 +902,4 @@ En Python, todas las excepciones heredan de la clase [`BaseException`](https://d
 
 > **Lectura de interés**: 
 > - [Python Documentation](https://docs.python.org/3/contents.html)
+> - [Python Style Guide](https://www.python.org/doc/essays/styleguide/)

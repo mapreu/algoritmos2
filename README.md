@@ -16,4 +16,6 @@ Lxs alentamos a participar activamente, hacer preguntas, plantear dudas, aportar
 # Contenido
 
 1. [Paradigma Funcional en Python](./01_paradigma_funcional/README.md)
-A. [Paradigma Orientado a Objetos en Python](./A_Python_POO/README.md)
+
+- A. [Paradigma Orientado a Objetos en Python](./A_Python_POO/README.md)
+- B. [Type Hints en Python](./B_Python_Type_Hints/README.md)

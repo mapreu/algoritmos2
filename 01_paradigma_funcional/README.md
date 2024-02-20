@@ -106,7 +106,7 @@ En este ejemplo definimos una función de orden superior `aplicar_operacion` que
 - Implementar una función llamada _wrapper_ que reciba por parámetro a otra función _f_ sin argumentos, la ejecute e imprima en pantalla el mensaje de ejecución: "Ejecutada f()".
 - Extender la función _wrapper_ de forma que pueda aceptar cualquier función con argumentos variables y se puedan pasar también desde la función _wrapper_ para que se invoquen en _f_. Por ejemplo, si _f_ acepta 3 argumentos, éstos deberían también pasarse a _wrapper_ para que se invoque _f(arg1, arg2, arg3)_ dentro.
 
-    _TIP: Ver el type hint Callable del módulo [typing](https://docs.python.org/3.12/library/typing.html?highlight=typing#annotating-callable-objects)._
+    _TIP: Ver el type hint [`Callable`](../B_Python_Type_Hints/README.md#callable)._
 
     _TIP 2: Ver pasaje de argumentos con [*args](https://docs.python.org/3/tutorial/controlflow.html#arbitrary-argument-lists) y [**kwargs](https://docs.python.org/3/tutorial/controlflow.html#keyword-arguments)._
 
@@ -740,7 +740,7 @@ En ciertas situaciones veremos que una función no siempre puede devolver un val
 
 Se pide implementar una función decoradora `acepta_no_valor` que permita adaptar una función con un único parámetro de cualquier tipo no nulo de forma que devuelva la evaluación de esa función si el argumento recibido no es `None`. De lo contrario, debe devolver `None`.
 
-TIP: Se puede usar el _hint_ de tipo de retorno de la decoradora como: `Callable[[T | None], R | None]`. Ver [Generics](../A_Python_POO/README.md#generics).
+TIP: Se puede usar el _hint_ de tipo de retorno de la decoradora como: `Callable[[T | None], R | None]`. Ver [Generics](../B_Python_Type_Hints/README.md#generics).
 
 ## Iteraciones e iterables
 En la programación imperativa trabajamos comúnmente con estructuras de control que permiten modelar una lógica repetitiva, estamos hablando de **bucles** como el `while`, `for`, `do`. Esto es posible gracias al registro de cierto estado del programa que verifica si la condición de corte del bucle se cumple o no, usualmente apoyándonos en variables que cambian de valor en cada iteración. Dado que en el paradigma funcional **no disponemos de este tipo de estructuras**, debemos modelar esta lógica a través de funciones puras y la [**recursión**](../02_recursion/README.md).
@@ -995,3 +995,4 @@ Utilizando la operación `reduce` definir una operación que ordene una lista de
 >   - Chapter 12: Decorator Design Techniques
 >   - Chapter 13: The PyMonad Library
 > - [Functional Programming HOWTO](https://docs.python.org/3/howto/functional.html)
+> - [Python Style Guide](https://www.python.org/doc/essays/styleguide/)
