@@ -13,7 +13,7 @@ Recordemos estilos comunes y en qué casos se aplican para Python.
 | Mayúsculas con guión | Palabras en mayúsculas separadas con guión bajo. | constantes | LONGITUD_LISTA, CANTIDAD_NROS |
 
 ## Objetos
-En Python las variables **no tienen asociado un tipo de dato**, es un lenguaje de **tipado dinámico**, conocido comúnmente como _ducktyping_. Gracias al uso de `hints` de tipo en nuestro código, podemos utilizar librerías no nativas que permiten hacer una verificación de tipos, similar a un type checker de un lenguaje tipado como Java. De todas formas, esta verificación no es parte del lenguaje y por lo tanto no es forzada por el mismo.
+En Python las variables **no tienen asociado un tipo de dato**, es un lenguaje de **tipado dinámico**, conocido comúnmente como _ducktyping_. Gracias al uso de [_type hints_](../B_Python_Type_Hints/README.md) de tipo en nuestro código, podemos utilizar librerías no nativas que permiten hacer una verificación de tipos, similar a un type checker de un lenguaje tipado como Java. De todas formas, esta verificación no es parte del lenguaje y por lo tanto no es forzada por el mismo.
 
 Como consecuencia, **una variable en Python es simplemente una etiqueta a una referencia** en memoria. Esta referencia en memoria es básicamente la **dirección donde se aloja una instancia u objeto**. Por tal motivo una variable no tiene asociado un tipo de dato, esa información **está asociada al objeto en memoria**.
 
