@@ -65,7 +65,7 @@ class NombreClase:
 ```
 
 ### Instanciación vs inicialización
-La instanciación es el proceso de **crear un objeto** a partir de una clase. Cuando se **instancia** una clase, se reserva espacio en la memoria para el objeto **con el método especial `__new__()`** y luego **se inicializa el objeto utilizando el método especial `__init__()`**, también conocido como el **constructor de la clase**.
+La instanciación es el proceso de **crear un objeto** a partir de una clase. Cuando se **instancia** una clase, se reserva espacio en la memoria para el objeto **con el método especial `__new__()`**, el cual retorna una instancia de esa clase y luego **se inicializa el objeto utilizando el método especial `__init__()`**.  Podemos decir que ambos métodos conforman el **constructor de la clase**.
 
 Veamos un ejemplo de definición de una clase junto con su constructor.
 
@@ -75,9 +75,9 @@ class Persona:
         self.nombre = nombre
         self.edad = edad
 ```
-El constructor `__init__()` recibe como primer argumento la instancia (por convención se lo nombra siempre `self`), y luego recibe los argumentos necesarios para inicializar el objeto. Los atributos `self.nombre` y `self.edad` son propios de esa instancia.
+El método inicializador `__init__()` recibe como primer argumento la instancia (**por convención se lo nombra siempre `self`**), y luego recibe los argumentos necesarios para inicializar el objeto. Los atributos `self.nombre` y `self.edad` son propios de esa instancia.
 
-Para instanciar un objeto de la clase que definimos anteriormente, simplemente llamamos al nombre de la clase seguido de paréntesis y los argumentos definidos en el constructor:
+Para instanciar un objeto de la clase que definimos anteriormente, simplemente llamamos al nombre de la clase seguido de paréntesis y los argumentos definidos en el `__init__()`:
 ```python
 juana = Persona("Juana", 23)    
 print(juana)                    # <__main__.Persona at 0x1d2bd5b1750>
@@ -179,11 +179,11 @@ En Python existen [métodos especiales](https://docs.python.org/3/reference/data
 
 Veamos algunos métodos especiales que resultan interesantes:
 #### `__new__`
-El método [`object.__new__(cls[, ...])`](https://docs.python.org/3/reference/datamodel.html#object.__new__) crea una nueva instancia de la clase que recibe como primer argumento. Es necesariamente un método estático. Los argumentos restantes se pasan al constructor de la clase (`__init__()`) junto con la instancia creada como primer argumento. Retorna la instancia creada.
+El método [`object.__new__(cls[, ...])`](https://docs.python.org/3/reference/datamodel.html#object.__new__) crea una nueva instancia de la clase que recibe como primer argumento. Es necesariamente un método estático. Los argumentos restantes se pasan al inicializador de la clase (`__init__()`) junto con la instancia creada como primer argumento. Retorna la instancia creada.
 > Es muy poco frecuente sobreescribir este método en la práctica.
 
 #### `__init__`
-El método [`object.__init__(self[, ...])`](https://docs.python.org/3/reference/datamodel.html#object.__init__) es invocado luego de la creación de la instancia realizada en `__new__()` y actúa como **constructor** de la clase.
+El método [`object.__init__(self[, ...])`](https://docs.python.org/3/reference/datamodel.html#object.__init__) es invocado luego de la creación de la instancia realizada en `__new__()` y ambos actúan como **constructor** de la clase.
 > Si definimos un método `__init__()` en una clase que hereda de otra que tiene definido su propio `__init__()`, debemos invocarlo explícitamente con `super().__init__()` con los argumentos necesarios.
 
 #### `__repr__`
@@ -417,7 +417,7 @@ class UserCampus(Estudiante, Docente):  # Ejemplo de herencia múltiple
 ```
 
 ### Constructor heredado
-Cuando extendemos una clase debemos tener presente los argumentos que recibe su constructor, ya que **si la superclase y subclase tienen un constructor definido, debemos invocar al primero explícitamente en el constructor de nuestra subclase**.
+Cuando extendemos una clase debemos tener presente los argumentos que recibe su método inicializador `__init__()`, ya que **si la superclase y subclase tienen un inicializador definido, debemos invocar al primero explícitamente en el inicializador de nuestra subclase**.
 
 ```python
 class Persona:
@@ -427,12 +427,12 @@ class Persona:
     
 class Estudiante(Persona):
     def __init__(self, nombre, apellido, matricula):
-        super().__init__(nombre, apellido)  # Invoca constructor de Persona
+        super().__init__(nombre, apellido)  # Invoca inicializador de Persona
         self.matricula = matricula
 
 juana = Estudiante("Juana", "Lopez", 1234)
 ```
-Para invocar un miembro de la superclase debemos accederlo con la referencia `super()`. En este caso, dado que `Persona` y `Estudiante` tienen constructores definidos, debemos invocar al constructor de `Persona` desde el de `Estudiante`.
+Para invocar un miembro de la superclase debemos accederlo con la referencia `super()`. En este caso, dado que `Persona` y `Estudiante` tienen inicializadores definidos, debemos invocar al inicializador de `Persona` desde el de `Estudiante`.
 
 ### Sobreescritura
 **Una subclase hereda todos los miembros de la superclase**, por lo cual podemos invocar los métodos de la superclase como si fueran propios. En caso que necesitáramos **adaptar el comportamiento heredado** a una subclase, podemos hacer uso de la [sobreescritura](https://github.com/mapreu/algoritmos1/tree/main/02_herencia#sobreescritura) de métodos.
