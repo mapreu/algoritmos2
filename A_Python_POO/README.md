@@ -334,7 +334,7 @@ Similar al caso de nombres con prefijo `_`, cuando definimos nombres con prefijo
 > El uso de [doble guión bajo como prefijo](https://peps.python.org/pep-0008/#method-names-and-instance-variables) debe utilizarse sólo cuando necesitemos evitar algún problema de conflicto de nombre en subclases, de lo contrario **es preferible utilizar la convención de un único guión bajo para atributos no públicos**.
 
 #### Atributos -> Propiedades
-Una alternativa interesante que ofrece Python para mejorar el encapsulamiento y consistencia de nuestras clases es a través de la conversión de los atributos en [_propiedades_](https://docs.python.org/3/library/functions.html#property). Esta funcionalidad que viene incorporada en el lenguaje permite definir [getters y setters](https://github.com/mapreu/algoritmos1/blob/main/01_introduccion/README.md#getters-y-setters) para operar con la estructura interna. Si bien no provee ocultamiento de información porque e
+Una alternativa interesante que ofrece Python para mejorar el encapsulamiento y consistencia de nuestras clases es a través de la conversión de los atributos en [_propiedades_](https://docs.python.org/3/library/functions.html#property). Esta funcionalidad que viene incorporada en el lenguaje permite definir [getters y setters](https://github.com/mapreu/algoritmos1/blob/main/01_introduccion/README.md#getters-y-setters) para operar con la estructura interna. Si bien no provee estrictamente ocultamiento de información porque estamos publicando en cierta forma nuestros atributos, es una opción válida para definir precisamente cómo accederlos o modificarlos.
 
 Veamos un ejemplo utilizando `property()` como un [decorador](#decoradores):
 ```python
@@ -387,7 +387,7 @@ def nombre_atributo(self, valor):
     self._nombre_atributo = valor
 ```
 
-Veamos que podemos agregar lógica tanto al momento de acceder un atributo como al momento de modificarlo, como resulta del ejemplo en los _setters_ de `Punto` que validan el nuevo valor. En ese caso decidimos utilizar un [método estático](#staticmethod-y-classmethod) `_validar` dentro de la clase para unificar y reutilizar la lógica de validación.
+Veamos que podemos agregar lógica tanto al momento de acceder un atributo como al momento de modificarlo, como resulta del ejemplo en los _setters_ de `Punto` que validan el nuevo valor. En ese caso decidimos utilizar un [método estático](#métodos) `_validar` dentro de la clase para unificar y reutilizar la lógica de validación.
 
 > Podemos generar propiedades de sólo lectura si no definimos su método _setter_, de tal forma si deseamos modificarla obtendremos un error del tipo `AttributeError: property '<nombre_atributo>' of '<NombreClase>' object has no setter`.
 
@@ -594,6 +594,49 @@ p1 <= p2    # True
 p1 >= p2    # False
 ```
 Vemos que nos podemos apoyar en sólo 3 métodos comparadores para sobrecargar los 6 operadores.
+
+## Organización del código
+Así como podemos organizar nuestro código en funciones o clases dentro de un archivo fuente, también podemos apoyarnos en **módulos** y **paquetes** para facilitar la organización. Comencemos por los primeros.
+
+### Módulos
+En Python, un archivo que contiene código fuente es sencillamente un **módulo**. Entonces, si un archivo se llama `mi_app.py`, podemos decir que es un módulo con nombre `mi_app`. Por lo tanto, si quisiéramos utilizar una clase definida dentro de ese archivo desde un segundo archivo (un segundo módulo), en ese último deberíamos importarla utilizando el nombre de módulo `mi_app`.
+
+Veamos el ejemplo donde tenemos dos módulos: `modulo1` y `móoulo2`. En el primer módulo definimos `ClaseA` y `ClaseB`. En el segundo módulo definimos una función `funcion2`. Consideremos que ambos archivos `modulo1.py` y `modulo2.py` se encuentran en la misma carpeta en nuestro sistema operativo.
+
+```python
+# Archivo modulo2.py
+from modulo1 import ClaseA
+
+def funcion2():
+    clasea = ClaseA()   # ok, importada desde modulo1
+    claseb = ClaseB()   # error, no se importó desde modulo1
+```
+Analizando el contenido de `modulo2.py` vemos que podemos importar a través de la instrucción `import` las definicioes que se encuentran en otro módulo (archivo). En este caso particular, se utiliza una forma de importar más específica, donde solicitamos traer sólo la definición de `ClaseA` con la instrucción `from`. Lo interesante de esta opción es que podemos consumir lo importado sin agregar el prefijo del módulo como veremos a continuación.
+
+```python
+# Archivo modulo2.py
+import modulo1
+
+def funcion2():
+    clasea = ClaseA()   # error, no reconoce ClaseA sin especificar el módulo
+    clasea = modulo1.ClaseA()   # ok
+    claseb = modulo1.ClaseB()   # ok
+```
+Ahora importamos directamente el módulo completo con todas sus definiciones, donde se crea el _namespace_ `modulo1`. La diferencia es que entonces debemos consumirlas con su nombre completo (_fully qualified name_) agregando el prefijo `<nombre_modulo>.` para indicar el _namespace_ del módulo desde donde se importan.
+
+En el primer caso no era necesario utilizar el nombre completo porque se importaba `ClaseA` **directamente al _namespace_ del módulo actual**. Esta forma suele ser la **recomendada**, porque **reduce el acoplamiento innecesario entre módulos y documenta** en cierta forma qué es lo que realmente consumimos de otro lugar. Por otro lado, esto puede generar conflictos de nombres si hay definiciones con mismo nombre en el módulo donde se está importando, lo cual se puede resolver agregando un alias a lo importado así:
+
+```python
+# Archivo modulo2.py
+from modulo1 import ClaseA as MiClaseA
+
+def funcion2():
+    clasea = MiClaseA()   # ok, importada desde modulo1 con otro nombre
+```
+
+> Al momento de importar un módulo, Python busca un archivo con el mismo nombre y extensión `.py` en el directorio local o en los directorios de paquetes instalados. Si no se encuentra, se produce error de importación.
+
+
 
 ## Funciones internas
 Las funciones definidas dentro de otras funciones se conocen como **funciones internas o funciones anidadas**. Son aquellas que están definidas dentro del cuerpo de otra función. Estas funciones **tienen acceso al ámbito local de la función externa**, lo que significa que **pueden acceder a las variables locales y los parámetros de la función externa**. Las funciones internas pueden ser utilizadas para modularizar el código y encapsular la lógica que solo es relevante dentro del contexto de la función externa.
