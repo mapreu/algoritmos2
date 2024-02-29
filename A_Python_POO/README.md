@@ -17,7 +17,7 @@ En Python las variables **no tienen asociado un tipo de dato**, es un lenguaje d
 
 Como consecuencia, **una variable en Python es simplemente una etiqueta a una referencia** en memoria. Esta referencia en memoria es básicamente la **dirección donde se aloja una instancia u objeto**. Por tal motivo una variable no tiene asociado un tipo de dato, esa información **está asociada al objeto en memoria**.
 
-> Recordemos que Python **todo es un objeto**: clases, instancias de clases, funciones, módulos...
+> Recordemos que en Python **todo es un objeto**: clases, instancias de clases, funciones, módulos...
 
 Cuando se genera una variable a través de la asignación `=`, estamos asociando esta etiqueta (nombre de la variable) al objeto asignado. A partir de ese momento, podemos acceder al objeto en memoria a través de esta etiqueta que lo referencia en nuestro código. Si la variable luego se asigna a otro nuevo objeto y no quedan variables que referencien al objeto previo, el [recolector de basura](https://docs.python.org/3/glossary.html#term-garbage-collection) se encargará de liberar de la memoria a ese objeto.
 
