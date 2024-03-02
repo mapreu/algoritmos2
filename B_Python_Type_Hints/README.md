@@ -46,7 +46,7 @@ Volviendo al ejemplo inicial, ahora con las anotaciones de tipo podemos agregar 
 ```python
 var: int = 45   # ok
 var = 4.3  # Expression of type "float" cannot be assigned to declared type "int"
-var = 'a'  # Expression of type "list[int]" cannot be assigned to declared type "int"
+var = 'a'  # Expression of type "str" cannot be assigned to declared type "int"
 var = [1]  # Expression of type "list[int]" cannot be assigned to declared type "int"
 __annotations__     # {'var': int}
 ```
