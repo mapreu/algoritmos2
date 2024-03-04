@@ -599,7 +599,7 @@ Vemos que nos podemos apoyar en sólo 3 métodos comparadores para sobrecargar l
 Así como podemos organizar nuestro código en funciones o clases dentro de un archivo fuente, también podemos apoyarnos en **módulos** y **paquetes** para facilitar la organización. Comencemos por los primeros.
 
 ### Módulos
-En Python, un archivo que contiene código fuente es sencillamente un **módulo**. Entonces, si un archivo se llama `mi_app.py`, podemos decir que es un módulo con nombre `mi_app`. Por lo tanto, si quisiéramos utilizar una clase definida dentro de ese archivo desde un segundo archivo (un segundo módulo), en ese último deberíamos importarla utilizando el nombre de módulo `mi_app`.
+En Python, un archivo que contiene código fuente es sencillamente un [**módulo**](https://docs.python.org/3/tutorial/modules.html). Entonces, si un archivo se llama `mi_app.py`, podemos decir que es un módulo con nombre `mi_app`. Por lo tanto, si quisiéramos utilizar una clase definida dentro de ese archivo desde un segundo archivo (un segundo módulo), en ese último deberíamos importarla utilizando el nombre de módulo `mi_app`.
 
 Veamos el ejemplo donde tenemos dos módulos: `modulo1` y `móoulo2`. En el primer módulo definimos `ClaseA` y `ClaseB`. En el segundo módulo definimos una función `funcion2`. Consideremos que ambos archivos `modulo1.py` y `modulo2.py` se encuentran en la misma carpeta en nuestro sistema operativo.
 
@@ -611,7 +611,7 @@ def funcion2():
     clasea = ClaseA()   # ok, importada desde modulo1
     claseb = ClaseB()   # error, no se importó desde modulo1
 ```
-Analizando el contenido de `modulo2.py` vemos que podemos importar a través de la instrucción `import` las definicioes que se encuentran en otro módulo (archivo). En este caso particular, se utiliza una forma de importar más específica, donde solicitamos traer sólo la definición de `ClaseA` con la instrucción `from`. Lo interesante de esta opción es que podemos consumir lo importado sin agregar el prefijo del módulo como veremos a continuación.
+Analizando el contenido de `modulo2.py` vemos que podemos importar a través de la instrucción [`import`](https://docs.python.org/3/reference/import.html) las definicioes que se encuentran en otro módulo (archivo). En este caso particular, se utiliza una forma de importar más específica, donde solicitamos traer sólo la definición de `ClaseA` con la instrucción `from`. Lo interesante de esta opción es que **podemos consumir lo importado sin agregar el prefijo del módulo** como veremos a continuación.
 
 ```python
 # Archivo modulo2.py
@@ -622,7 +622,9 @@ def funcion2():
     clasea = modulo1.ClaseA()   # ok
     claseb = modulo1.ClaseB()   # ok
 ```
-Ahora importamos directamente el módulo completo con todas sus definiciones, donde se crea el _namespace_ `modulo1`. La diferencia es que entonces debemos consumirlas con su nombre completo (_fully qualified name_) agregando el prefijo `<nombre_modulo>.` para indicar el _namespace_ del módulo desde donde se importan.
+Ahora importamos directamente el módulo completo con todas sus definiciones, donde se crea el **_namespace_** `modulo1`. La diferencia es que entonces debemos consumirlas con su nombre completo (_fully qualified name_) agregando el prefijo `<nombre_modulo>.` para indicar el _namespace_ del módulo desde donde se importan.
+
+> El _namespace_ o espacio de nombres es simplemente una **colección de nombres identificadores de objetos definidos en un entorno de ejecución**. Esto incluye nombres de variables, funciones, clases, etc. Podemos verificar este listado con la función [`dir()`](https://docs.python.org/3/library/functions.html#dir). Cada módulo genera su propio _namespace_ global, mientras que una función o clase generan su propio _namespace_ local.
 
 En el primer caso no era necesario utilizar el nombre completo porque se importaba `ClaseA` **directamente al _namespace_ del módulo actual**. Esta forma suele ser la **recomendada**, porque **reduce el acoplamiento innecesario entre módulos y documenta** en cierta forma qué es lo que realmente consumimos de otro lugar. Por otro lado, esto puede generar conflictos de nombres si hay definiciones con mismo nombre en el módulo donde se está importando, lo cual se puede resolver agregando un alias a lo importado así:
 
@@ -634,9 +636,61 @@ def funcion2():
     clasea = MiClaseA()   # ok, importada desde modulo1 con otro nombre
 ```
 
-> Al momento de importar un módulo, Python busca un archivo con el mismo nombre y extensión `.py` en el directorio local o en los directorios de paquetes instalados. Si no se encuentra, se produce error de importación.
+> Al momento de importar un módulo, Python busca un archivo con el mismo nombre y extensión `.py` en:
+> - el directorio local
+> - los directorios definidos en la variable de entorno [_PYTHONPATH_](https://docs.python.org/3/using/cmdline.html#envvar-PYTHONPATH)
+> - los directorios de paquetes instalados (por defecto en el directorio `site-packages`)
+> Si no se encuentra, se produce error de importación.
 
+### Paquetes
+Podemos incorporar un nivel adicional de abstracción en la organización a través de los paquetes. Un [**paquete**](https://docs.python.org/3/tutorial/modules.html#packages) es una **colección de módulos y/o paquetes**. Así como un módulo es un archivo, **un paquete es una carpeta** en el sistema operativo con la particularidad que siempre contiene un archivo `__init__.py`.
 
+> A partir de Python 3.3 se define el _namespace package_ en la [PEP 420](https://peps.python.org/pep-0420/), donde se puede ignorar la creación del archivo `__init__.py` para generar un paquete.
+
+Cuando importamos un módulo dentro de un paquete, se ejecuta en primera instancia el archivo `__init__.py`, de forma que sirve como **inicializador global** del paquete. Por ejemplo, allí se podrían incorporar variables globables del paquete para utilizar dentro de los módulos. Una variable de interés para este archivo es [`__all__`](https://docs.python.org/3/tutorial/modules.html#importing-from-a-package), una lista de nombres de módulos que serán importados cuando se invoca `from <nombre_paquete> import *`.
+
+> De todas formas, siempre **recomendamos evitar la importación masiva** utilizando el `*`.
+
+Imaginemos que tenemos esta estructura de archivos en nuestro sistema:
+```bash
+src/
+    paquete_a/
+        __init__.py
+        mod1.py
+        mod2.py
+        paquete_b/
+            __init__.py
+            mod3.py
+    paquete_c/
+        __init__.py
+        mod4.py
+    main.py
+```
+Si deseamos importar una función llamada `func1` del módulo `mod1` en cualquier otro módulo, por ejemplo en `main.py`, podríamos hacerlo de forma absoluta así:
+```python
+from paquete_a.mod1 import func1
+```
+Es similar el caso de importar desde subpaquetes, por ejemplo si quisiéramos importar una variable `var3` que existe en el módulo `mod3`, se podría hacer así:
+```python
+from paquete_a.paquete_b.mod3 import var3
+```
+
+Es válido también utilizar el import de módulos completos como vimos previamente. Lo que no es posible es importar un paquete completo, a menos que utilicemos la forma `from <paquete> import *` y agreguemos la variable `__all__` al archivo `__init__.py` del paquete.
+
+### La variable `__name__`
+Existe una variable especial [`__name__`](https://docs.python.org/3/library/__main__.html) que **adopta el nombre del módulo cuando es importado**, excepto cuando se lo ejecuta como un script donde lleva el valor `'__main__'`. Por esta razón es común encontrar código como el siguiente en módulos Python:
+
+```python
+# implementaciones dentro del módulo
+...
+
+if __name__ == '__main__':
+    # Esta parte se ejecuta sólo si se ejecuta el archivo directamente como script
+    ...
+```
+Cuando ejecutamos un módulo/archivo directamente con `python mi_modulo.py`, la variable `__name__` adopta el valor `'__main__'` lo cual permite la ejecución del código dentro del `if` previo. De esta forma se define un punto de ingreso a este módulo cuando es invocado. Esto no sucede cuando importamos el módulo desde otro con `import mi_modulo`, porque el valor de la variable `__name__` será `'mi_modulo` y no entra en el `if`.
+
+> La distribución del código en módulos y/o paquetes es muy dependiente del tipo de producto desarrollado y de las convenciones utilizadas en cada equipo u organización. Es buena idea consultar si existe algún estándar antes de comenzar un proyecto nuevo.
 
 ## Funciones internas
 Las funciones definidas dentro de otras funciones se conocen como **funciones internas o funciones anidadas**. Son aquellas que están definidas dentro del cuerpo de otra función. Estas funciones **tienen acceso al ámbito local de la función externa**, lo que significa que **pueden acceder a las variables locales y los parámetros de la función externa**. Las funciones internas pueden ser utilizadas para modularizar el código y encapsular la lógica que solo es relevante dentro del contexto de la función externa.
