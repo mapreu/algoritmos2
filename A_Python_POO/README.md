@@ -81,7 +81,7 @@ Para instanciar un objeto de la clase que definimos anteriormente, simplemente l
 ```python
 juana = Persona("Juana", 23)    
 print(juana)                    # <__main__.Persona at 0x1d2bd5b1750>
-print(hex(id(a_mayusculas)))    # 1d2bd5b1750
+print(hex(id(juana)))           # 1d2bd5b1750
 print(juana.nombre)             # Juana
 print(juana.edad)               # 23
 ```
@@ -194,9 +194,9 @@ class Persona:
     # resto de la implementación de Persona...
     
     def __repr__(self):
-        return f'{self.__class__.__name__}("{self.nombre}","{self.edad}")'
+        return f'<{self.__class__.__name__}("{self.nombre}","{self.edad}")>'
 
-juana = Persona("juana", 23)    # Persona("juana","23")
+juana = Persona("juana", 23)    # <Persona("juana","23")>
 ```
 
 #### `__str__`
@@ -248,6 +248,8 @@ def __hash__(self):
     return hash((self.nombre, self.edad))
 ```
 Dado que definimos la igualdad de `Persona` basada en el valor de los atributos `nombre` y `edad`, también nos apoyamos en el valor _hash_ de la tupla que contiene dichos atributos.
+
+> A partir de Python 3.3 se incorpora por defecto una aleatoriedad en la generación del hash.
 
 #### `__bool__`
 El método [`object.__bool__(self)`](https://docs.python.org/3/reference/datamodel.html#object.__bool__) se invoca cuando se utiliza la instancia en una expresión booleana, representa el _valor de verdad_ del objeto. Debe devolver `True` o `False`. Si no se define, se invoca al método `__len__()` y devuelve `True` si es distinto de `0`. Si tampoco tiene definido ese método, todas las instancias devuelven `True`.
