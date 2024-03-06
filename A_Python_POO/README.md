@@ -530,6 +530,55 @@ En este ejemplo definimos una clase base `Vehiculo` con ciertos atributos comune
 
 > Los miembros no públicos que se nombran con el prefijo [`__`](#accesibilidad-a-miembros-de-clase) son los únicos que **no son heredados** por subclases, ya que son renombrados internamente por Python.
 
+### Method Resolution Order (MRO)
+Dado que Python permite la herencia múltiple, resulta de interés conocer cómo se determina la implementación a utilizar de un método durante la herencia. Python utiliza lo que se denomina **_method resolution order_**, un mecanismo por el cual se determina **un orden particular donde buscaremos implementaciones de un método a lo largo de la jerarquía de clases**. De esta forma, traducimos un orden jerárquico (grafo de herencia) en un orden lineal (lista de clases).
+
+```python
+class A:
+    def metodo1(self):
+        return 'Metodo1 de A'
+class B(A):
+    def metodo1(self):
+        return 'Metodo1 de B'
+ 
+objeto_b = B()
+objeto_b.metodo1()      # Metodo1 de B
+```
+Mediante la herencia simple, no existe conflicto en el orden de resolución y se sobreescribe `metodo1` en la clase `B`. Python determina que se debe invocar a esa versión/implementación del método gracias al orden definido por el _MRO_.
+
+El método de clase [`mro()`](https://docs.python.org/3/library/stdtypes.html?highlight=mro#class.mro) nos ofrece información del orden utilizado por el intérprete para resolver el método a invocar. **Devuelve el contenido del atributo de clase `__mro__`** que contiene una **lista de clases** que determina el orden de búsqueda de resolución. Al invocar un método de un objeto, se busca linealmente en las clases de esa lista para ejecutar la primera implementación encontrada. Veamos que siempre tiene precedencia la clase más especializada para luego ir probando en clases más generales desde las cuales se hereda hasta llegar a `object`.
+
+```python
+A.mro()     # [__main__.A, object]
+B.mro()     # [__main__.B, __main__.A, object]
+```
+Podemos ver claramente que si invocamos `metodo1` desde un objeto de la clase `A`, primero se buscará si está definido en esa clase y luego en `object` (`A` -> `object`). Para el caso de un objeto de la clase `B`, primero se busca la definición en `B`, luego en `A` y finalmente en `object` (`B` -> `A` -> `object`).
+
+Veamos ahora cómo se resuelve para la **herencia múltiple**.
+
+```python
+class A:
+    def metodo1(self):
+        return 'Metodo1 de A'
+class B(A):
+    def metodo1(self):
+        return 'Metodo1 de B'
+class C(A):
+    def metodo1(self):
+        return 'Metodo1 de C'
+class D(B, C):
+    pass
+
+D.mro()     # [__main__.D, __main__.B, __main__.C, __main__.A, object]
+```
+Si analizamos el _MRO_ de la clase `D` vemos que obviamente primero se busca en `D` y luego en `B`, en lugar de buscar en `C`. Esto sucede porque Python utiliza un algoritmo de linealización denominado [C3 superclass linearization](https://en.wikipedia.org/wiki/C3_linearization) que determina el orden priorizando las más profundas en la jerarquía y de izquierda a derecha en aquellas del mismo nivel.
+
+```python
+objeto_d = D()
+objeto_d.metodo1()      # Metodo1 de B
+```
+Por ese motivo la invocación de `metodo1` de un objeto de `D` será la implementada en la clase `B`, ya que es la primera que aparece en la lista del atributo `D.__mro__`.
+
 ### Clases abstractas
 Recordando la definición de [clase abstracta](https://github.com/mapreu/algoritmos1/tree/main/05_interfaces_y_clases_abstractas#clases-abstractas) que vimos en Java, en Python podemos definir este tipo de clases a través del módulo [`abc`](https://docs.python.org/3/library/abc.html), llamadas **Abstract Base Classes**.
 
