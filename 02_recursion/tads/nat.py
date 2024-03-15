@@ -1,8 +1,8 @@
-from typing import TypeAlias, Union
+from typing import Union, TypeAlias
 
 __all__ = ['Nat', 'cero', 'division', 'es_cero', 'igual', 'mayor', 'mayor_igual', 'menor', 'menor_igual', 'nat_to_int', 'potencia', 'pred', 'producto', 'resta', 'suc', 'suma']
 
-Nat = Union["Cero", "Suc"]
+Nat: TypeAlias = Union["Cero", "Suc"]
 
 # Clases constructoras de estructura
 class Cero:
@@ -52,7 +52,7 @@ def suma(x: Nat, y: Nat) -> Nat:
         return y
     else:
         return suma(pred(x), suc(y))
-
+    
 def igual(x: Nat, y: Nat) -> bool:
     pass
     

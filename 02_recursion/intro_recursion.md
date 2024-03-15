@@ -32,7 +32,7 @@ Veamos cómo lo traducimos en Python.
 
 ```python
 def censar(zona: Zona) -> int:
-    if zona.esVivienda():
+    if zona.es_vivienda():
         return zona.habitantes
     else:
         habitantes: int = 0
@@ -113,7 +113,7 @@ Esta consideración sobre la entrada es **fundamental para evitar problemas de r
 Finalmente, veamos cómo quedaría representado el orden bien fundado en las sucesivas
 llamadas de la función sumatoria (4).
 
-`sumatoria(4) > sumatoria(3) > sumatoria(2) > sumatoria(1)`
+![sumatoria](./imagenes/sumatoria.png)
 
 ### Ejercicio: Jugando con dígitos
 Definir lo siguiente:
@@ -140,6 +140,11 @@ def factorial(n: int) -> int:
     else:
         return factorial(n-1) * n
 ```
+Al igual que con la sumatoria y muchas otras operaciones recursivas, notemos que en el caso recursivo necesitamos computar antes `factorial(n-1)` para luego multiplicar el resultado con `n`. Cuando entramos en esa recursión, la instancia actual del factorial se detiene esperando el resultado mencionado, por lo cual nos estamos apoyando en la **pila de ejecución** para almacenar las variables locales, punteros de retorno, etc.
+
+![factorial pila ejecución](./imagenes/factorial_pila_ejecucion.png)
+
+Esta imagen muestra el estado de la pila de ejecución cuando se llega al caso base `factorial(1)`, donde aún quedan apilados todos los casos previos ya que no finalizan hasta se aplique la multiplicación por `n`.
 
 #### Recursión múltiple
 Sucede cuando las referencias a sí mismo superan la unidad. Podemos identificar casos particulaes como **recursión doble** o **recursión triple** si son dos o tres referencias recursivas respectivamente. Un ejemplo común de recursión doble es el de fibonacci.
@@ -153,7 +158,30 @@ def fibonacci(n: int) -> int:
 ```
 En general la recursión múltiple es muy ineficiente ya que **se genera un árbol de invocaciones**, a diferencia de la recursión simple que es una secuencia de invocaciones. En casos donde se invoquen varias veces una misma instancia recursiva y se respete la transparencia referencial, es posible utilizar la técnica de **memoization** que almacena el resultado en memoria para evitar recomputarlo en próximas invocaciones.
 
-> Un estilo de diseño de algoritmos donde se divide un problema en subproblemas similares que se combinan en una solución recursiva y utilizando la técnica de memoization, se lo denomina **programación dinámica**.
+![fibonacci](./imagenes/fibonacci.png)
+
+Cuando invocamos `fibonacci(4)` se producen diversas invocaciones recursivas, generando así un árbol de invocaciones donde existen evaluaciones repetidas. Por ejemplo, `fibonacci(2)` se evalúa 2 veces en ese caso, si utilizamos _memoization_ sólo lo evaluaríamos una vez y reduciría notablemente la cantidad de invocaciones (se poda el árbol).
+
+> Un estilo de diseño de algoritmos donde se divide un problema en subproblemas similares que se combinan en una solución recursiva y utilizando la técnica de _memoization_, se lo denomina **programación dinámica**.
+
+Veamos un ejemplo para optimizar el caso de fibonacci.
+
+```python
+def fibonacci(n: int) -> int:
+    calculados = {}
+
+    def fibo_interna(n: int) -> int:
+        if n < 0:
+            raise ValueError('n debe ser mayor o igual a 0')
+        if n <= 1:
+            return n
+        if n not in calculados:
+            calculados[n] = fibo_interna(n-1) + fibo_interna(n-2)
+        return calculados[n]
+  
+    return fibo_interna(n)
+```
+Almacenando las evaluaciones en un diccionario `calculados` logramos reducir la complejidad computacional en tiempo del algoritmo. Originalmente la complejidad era `O(2^n)` porque en cada caso recursivo se invocaba dos veces a sí mismo, y ahora con _memoization_ pasa a ser `O(n)` porque sólo se evalúa una vez cada número.
 
 ### Clasificación según dirección
 Esta distinción se basa en determinar si la recursión ocurre o no en la misma operación. Esto también se aplica para el caso de estructuras recursivas.
@@ -184,7 +212,11 @@ print(es_par(9))    # False
 print(es_impar(4))  # False
 print(es_impar(7))  # True
 ```
-En este caso vemos cómo distinguir la paridad de un número entero no negativo. Si ingresáramos un número negativo se generaría la excepción `RecursionError` ya que se produce una recursión infinita. Ambas funciones llaman a la otra, generando así una **recursión indirecta**. La clasificación de par e impar es excluyente, donde si un número es par implica que el mismo no es impar, y viceversa. Si un número entero es par, entonces su predecesor será necesariamente impar, y viceversa.
+En este caso vemos cómo distinguir la paridad de un número entero no negativo. Si ingresáramos un número negativo se generaría la excepción `RecursionError` ya que se produce una recursión infinita. Ambas funciones llaman a la otra, generando así una **recursión indirecta**. 
+
+![par impar](./imagenes/par_impar.png)
+
+La clasificación de par e impar es excluyente, donde si un número es par implica que el mismo no es impar, y viceversa. Si un número entero es par, entonces su predecesor será necesariamente impar, y viceversa.
 
 ### Clasificación según visibilidad
 
