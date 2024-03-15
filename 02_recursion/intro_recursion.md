@@ -42,7 +42,8 @@ def censar(zona: Zona) -> int:
 ```
 Nos apoyamos en una clase `Zona` que define de forma abstracta el concepto de país, provincia, departamento, etc. Asumimos que una vivienda tiene un atributo propio `habitantes` que nos dice la cantidad de personas que viven allí. El resto de las especializaciones de `Zona` tienen un atributo `subzonas` que es una lista de zonas que la conforman.
 
-De este ejemplo podemos definir una **estructura general** para modelar un problema recursivo.
+### Diseño de una operación recursiva
+Del ejemplo mencionado podemos definir una **estructura de operación general** para resolver un problema recursivo.
 ```
 funcion resolver(problema)
     si problema es simple entonces
@@ -58,6 +59,7 @@ funcion resolver(problema)
     finSi
 finFuncion
 ```
+Siempre debemos contemplar incorporar el o los casos bases para poder darle corte a las invocaciones recursivas, por eso se muestra aquí con un `if` bien explícito (aunque no siempre será necesariamente así). Luego en el caso recursivo (la sección del `else`), realizamos primero las divisiones necesarias en subproblemas y los utilizamos para resolver parcialmente el problema con invocaciones recursivas. Finalmente se combinan esas soluciones parciales para devolver el resultado de esa instancia del problema.
 
 ### Ejercicio: Modelar las zonas para censo
 Implementar las clases necesarias para modelar las diferentes zonas a censar, donde país es la más amplia y se compone de provincias, etc. Todas deben tener un atributo de subzonas que representa la lista de zonas que las conforman, excepto la clase de vivienda que tiene el atributo habitantes. Finalmente, incorporar la operación recursiva de censar como método en la clase abstracta `Zona`.
