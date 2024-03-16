@@ -5,3 +5,4 @@
     - [Sierpinsky](./grafica/sierpinsky.py)
     - [Haches](./grafica/haches.py)
     - [Cuadrados](./grafica/cuadrados.py)
+- [Recursión de pila y de cola](./recursion_pila_cola.md)
