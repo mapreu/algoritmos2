@@ -193,7 +193,7 @@ def resta_lista(xs: list[int]) -> int:
     def apilado(xs: list[int], pila: list[int]):
         if xs != []:
             pila.append(xs[0])
-            resta_lista_apilado(xs[1:], pila)
+            apilado(xs[1:], pila)
 
     def desapilado(pila: list[int], acumulador: int) -> int:
         if pila == []:
