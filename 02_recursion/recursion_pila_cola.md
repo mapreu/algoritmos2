@@ -184,7 +184,7 @@ resta_lista([10, 2, 5, 9]) # ((10 - 2) - 5) - 9)
 Esta versión que utiliza recursión de cola intenta replicar la misma operación de restar elementos de la lista, pero produce un resultado diferente `((10 - 2) - 5) - 9) = -6`. El problema de esta conversión inválida es que no podemos computar previamente la resta de los elementos finales como el caso de la anterior. Por lo tanto no podemos convertir la función original con esta estrategia.
 
 ### Utilizando pila explícita
-Cuando no podemos eliminar la recursión de pila utilizando un acumulador podemos optar por esta estrategia. La idea es simple, **gestionaremos nuestra propia pila de ejecución** en un objeto de tipo `Pila` o `Stack`. Entonces simularemos manualmente el apilado y desapilado de invocaciones recursivas con la información necesaria para construir la solución en el mismo orden y con la misma asociación de soluciones paraciales. Así podremos eliminar la recursión de pila para convertir la solución en una recursión de cola o en una simple iteración.
+Cuando no podemos eliminar la recursión de pila utilizando un acumulador podemos optar por esta estrategia. La idea es simple, **gestionaremos nuestra propia pila de ejecución** en un objeto de tipo `Pila` o `Stack`. Entonces simularemos manualmente el apilado y desapilado de invocaciones recursivas con la información necesaria para construir la solución en el mismo orden y con la misma asociación de soluciones parciales. Así podremos eliminar la recursión de pila para convertir la solución en una recursión de cola o en una simple iteración.
 
 Veamos una forma de resolver la función previa con una pila explícita:
 
@@ -193,7 +193,7 @@ def resta_lista(xs: list[int]) -> int:
     def apilado(xs: list[int], pila: list[int]):
         if xs != []:
             pila.append(xs[0])
-            resta_lista_apilado(xs[1:], pila)
+            apilado(xs[1:], pila)
 
     def desapilado(pila: list[int], acumulador: int) -> int:
         if pila == []:
