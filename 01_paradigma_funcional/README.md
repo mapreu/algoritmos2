@@ -319,7 +319,11 @@ def __init__(self, nombre: str, apellido: str, edad: int) -> None:
     self.apellido = apellido
     self.edad = edad
 ```
-De esa forma se simplifica la implementación de clases, por lo menos su estructura, y luego nos centramos en definir el comportamiento normalmente. El decorador `@dataclass` tiene un parámetro (recordemos que es una función como cualquier otra) que permite convertir a los **atributos de instancia de solo lectura**. El nombre del parámetro es `frozen` y es un booleano que si se define en `True` podemos evitar la asignación nueva de valores y así **proveer inmutabilidad a nuestra clase**.
+De esa forma se simplifica la implementación de clases, por lo menos su estructura, y luego nos centramos en definir el comportamiento normalmente. 
+
+Por defecto, el decorador `@dataclass` nos implementará automáticamente los siguientes métodos: `__init__()`, `__repr__()` y `__eq__()`.
+
+El decorador `@dataclass` tiene un parámetro (recordemos que es una función como cualquier otra) que permite convertir a los **atributos de instancia de solo lectura**. El nombre del parámetro es `frozen` y es un booleano que si se define en `True` podemos evitar la asignación nueva de valores y así **proveer inmutabilidad a nuestra clase**.
 
 ```python
 from dataclasses import dataclass
