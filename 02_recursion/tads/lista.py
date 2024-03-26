@@ -14,7 +14,7 @@ class Nodo(Generic[T]):
 
 class Lista(Generic[T]):
     def __init__(self):
-        self._head: Optional[Nodo] = None
+        self._head: Optional[Nodo[T]] = None
 
     def es_vacia(self) -> bool:
         return self._head is None
