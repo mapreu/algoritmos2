@@ -88,7 +88,7 @@ def recorrer(camino_previo: list[Posicion]) -> (bool, list[Posicion]):
             if hay_paso(nueva_posicion) and nueva_posicion not in camino_previo:
                 camino_actual = camino_previo.copy()
                 camino_actual.append(nueva_posicion)
-                salida_encontrada, solucion = recorrer(camino_actual, soluciones)
+                salida_encontrada, solucion = recorrer(camino_actual)
             
         return salida_encontrada, solucion
 ```
