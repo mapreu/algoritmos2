@@ -82,6 +82,7 @@ def recorrer(camino_previo: list[Posicion]) -> (bool, list[Posicion]):
         return True, camino_previo
     else:
         salida_encontrada = False
+        solucion = []
         direcciones = ['N', 'S', 'O', 'E']
         while direcciones and not salida_encontrada:
             nueva_posicion = avanzar(posicion_actual, direcciones.pop())
