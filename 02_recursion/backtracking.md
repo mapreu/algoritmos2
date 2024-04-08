@@ -76,7 +76,7 @@ Siguiendo la imagen del árbol previa, imaginemos que comenzamos caminando las p
 Veamos una idea para implementar un algoritmo que encuentre un camino que lleve a la salida, una solución válida.
 
 ```python
-def recorrer(camino_previo: list[Posicion]) -> (bool, list[Posicion]):
+def recorrer(camino_previo: list[Posicion]) -> tuple[bool, list[Posicion]]:
     posicion_actual = camino_previo[-1]
     if es_salida(posicion_actual):
         return True, camino_previo
