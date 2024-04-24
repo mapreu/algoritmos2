@@ -185,6 +185,23 @@ def fibonacci(n: int) -> int:
 ```
 Almacenando las evaluaciones en un diccionario `calculados` logramos reducir la complejidad computacional en tiempo del algoritmo. Originalmente la complejidad era `O(2^n)` porque en cada caso recursivo se invocaba dos veces a sí mismo, y ahora con _memoization_ pasa a ser `O(n)` porque sólo se evalúa una vez cada número.
 
+Debido a que Python **instancia los objetos de los parámetros por _default_ al momento de la definición de la operación**, podríamos apoyarnos en este comportamiento del lenguaje para evitar la función interna `fib_interna`. Esto es posible gracias a que el diccionario `calculados` se instancia sólo una vez al definir la función y luego se utiliza el mismo objeto en las sucesivas invocaciones recursivas.
+
+```python
+def fibonacci(n: int, calculados: dict = {}) -> int:
+    if n < 0:
+        raise ValueError('n debe ser mayor o igual a 0')
+    if n <= 1:
+        return n
+    if n not in calculados:
+        print(n)
+        calculados[n] = fibonacci(n-1) + fibonacci(n-2)
+    return calculados[n]
+```
+Esta versión funciona porque `calculados` es de tipo `dict`, el cual es mutable y por lo tanto se comparte este objeto en cada invocación. Esto no sería posible si utilizáramos un tipo inmutable como `tuple`.
+
+> En Python es una buena práctica utilizar **tipos inmutables** cuando necesitamos definir **valores por defecto en parámetros** de operaciones.
+
 ### Clasificación según dirección
 Esta distinción se basa en determinar si la recursión ocurre o no en la misma operación. Esto también se aplica para el caso de estructuras recursivas.
 
