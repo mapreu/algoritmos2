@@ -356,6 +356,8 @@ def bfs(self):
 ```
 Esta versión inicializa una cola (_queue_) que contiene al árbol a recorrer (el nodo raíz) y luego invoca la operación interna `recorrido` pasando como argumento a la cola. La idea es desencolar para obtener un nodo a visitar y luego encolar los subárboles del mismo en la cola. Esto se realiza repetidas veces hasta que no queden nodos en la cola.
 
+> Dado que `q` se define dentro de `bfs` y `recorrer` es una operación interna de ella, **podríamos haber evitado pasar `q` como parámetro de `recorrer`** ya que forma parte de la [clausura](../A_Python_POO/README.md#clausura). En el código presentado hacemos su pasaje explícito simplemente para facilitar la interpretación.
+
 Es importante notar que eventualmente la recursión termina (llega al caso base de una cola vacía) porque **en todas las instancias recursivas se desencola un nodo, pero no necesariamente siempre se enconlan los descendientes**. Las inclusiones de subárboles en la cola están condicionadas a si estamos ante un árbol no vacío.
 
 > Dado que el recorrido **BFS** utiliza una cola explícita, su implementación resulta en una [recursión lineal de cola](../02_recursion/recursion_pila_cola.md#recursión-de-cola), la cual puede reemplazarse sencillamente en una iteración.

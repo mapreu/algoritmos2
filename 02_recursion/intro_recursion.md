@@ -194,7 +194,6 @@ def fibonacci(n: int, calculados: dict = {}) -> int:
     if n <= 1:
         return n
     if n not in calculados:
-        print(n)
         calculados[n] = fibonacci(n-1) + fibonacci(n-2)
     return calculados[n]
 ```
