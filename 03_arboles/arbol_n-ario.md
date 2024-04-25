@@ -33,11 +33,11 @@ def dato(self, valor: T):
     self._dato = valor
 
 @property
-def subarboles(self) -> list[ArbolN[T]]:
+def subarboles(self) -> list["ArbolN[T]"]:
     return self._subarboles
 
 @subarboles.setter
-def subarboles(self, subarboles: list[ArbolN[T]]):
+def subarboles(self, subarboles: list["ArbolN[T]]"):
     self._subarboles = subarboles
 ```
 
