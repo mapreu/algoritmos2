@@ -1,3 +1,8 @@
 {
-    "python.analysis.typeCheckingMode": "basic"
+    "python.analysis.typeCheckingMode": "basic",
+    "python.testing.pytestArgs": [
+        "--cov=./03_arboles/tads",
+        "--rootdir=./03_arboles/tads"
+    ],
+    "python.testing.pytestEnabled": true
 }

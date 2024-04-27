@@ -13,7 +13,7 @@ class NodoAB(Generic[T]):
     def __str__(self):
         return self.dato
     
-class ArbolBinario(Generic[T]):   
+class ArbolBinario(Generic[T]):
     def __init__(self):
         self.raiz: Optional[NodoAB[T]] = None
         
