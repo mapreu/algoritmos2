@@ -4,18 +4,18 @@ from functools import wraps
 
 T = TypeVar('T')
 
-class ArbolBinario(Generic[T]):
-    class NodoAB(Generic[T]):
-        def __init__(self, dato: T, si: "Optional[ArbolBinario[T]]" = None, sd: "Optional[ArbolBinario[T]]" = None):
-            self.dato = dato
-            self.si: ArbolBinario[T] = ArbolBinario() if si is None else si
-            self.sd: ArbolBinario[T] = ArbolBinario() if sd is None else sd
+class NodoAB(Generic[T]):
+    def __init__(self, dato: T, si: "Optional[ArbolBinario[T]]" = None, sd: "Optional[ArbolBinario[T]]" = None):
+        self.dato = dato
+        self.si: ArbolBinario[T] = ArbolBinario() if si is None else si
+        self.sd: ArbolBinario[T] = ArbolBinario() if sd is None else sd
 
-        def __str__(self):
-            return self.dato
-            
+    def __str__(self):
+        return self.dato
+    
+class ArbolBinario(Generic[T]):   
     def __init__(self):
-        self.raiz: Optional[ArbolBinario.NodoAB[T]] = None
+        self.raiz: Optional[NodoAB[T]] = None
         
     class _Decoradores:
         @classmethod
@@ -30,7 +30,7 @@ class ArbolBinario(Generic[T]):
     @staticmethod
     def crear_nodo(dato: T, si: "Optional[ArbolBinario[T]]" = None, sd: "Optional[ArbolBinario[T]]" = None) -> "ArbolBinario[T]":
         t = ArbolBinario()
-        t.raiz = ArbolBinario.NodoAB(dato, si, sd)
+        t.raiz = NodoAB(dato, si, sd)
         return t
 
     def es_vacio(self) -> bool:
@@ -47,7 +47,7 @@ class ArbolBinario(Generic[T]):
         return self.raiz.sd
     
     def es_hoja(self) -> bool:
-        return not self.es_vacio() and self.si().es_vacio and self.sd().es_vacio()
+        return not self.es_vacio() and self.si().es_vacio() and self.sd().es_vacio()
 
     @_Decoradores.valida_es_vacio
     def dato(self) -> T:
@@ -121,7 +121,7 @@ class ArbolBinario(Generic[T]):
         pass
         
 
-if __name__ == '__main__':
+def main():
     t = ArbolBinario.crear_nodo(1)
     n2 = ArbolBinario.crear_nodo(2)
     n3 = ArbolBinario.crear_nodo(3)
@@ -155,3 +155,6 @@ if __name__ == '__main__':
     print(t3)
     print(t3.sin_hojas())
 
+
+if __name__ == '__main__':
+    main()

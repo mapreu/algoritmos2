@@ -243,7 +243,7 @@ Las propiedades en Python se implementan por debajo mediante un [descriptor](htt
 ### Clases imnutables: Métodos especiales `__setattr__` y `__delattr__`
 Cuando intentamos realizar una asignación para un atributo de un objeto, internamente se invoca el método [`__setattr__`](https://docs.python.org/3/reference/datamodel.html#object.__setattr__) que recibe como argumentos: el objeto en sí, el nombre del atributo y el valor a asignarle. Entonces, si sobreescribimos este método en nuestra clase inmutable, podríamos evitar cualquier tipo de asignación en los atributos de la clase. Sólo necesitaríamos invocar el método sin modificar (heredado de `object`) para inicializarlos en el método `__init__`.
 
-El método [`__delattr__`](https://docs.python.org/3/reference/datamodel.html#object.__delattr__) es similar y sólo recibe como argumento el nombre del atributo. Se invca cuando se intenta eliminar un atributo de un objeto con el comando `del`. Así que también nos serviría para evitar que se eliminen atributos.
+El método [`__delattr__`](https://docs.python.org/3/reference/datamodel.html#object.__delattr__) es similar y sólo recibe como argumento el nombre del atributo. Se invoca cuando se intenta eliminar un atributo de un objeto con el comando `del`. Así que también nos serviría para evitar que se eliminen atributos.
 
 Veamos un ejemplo:
 

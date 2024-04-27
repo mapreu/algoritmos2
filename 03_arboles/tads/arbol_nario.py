@@ -91,7 +91,8 @@ class ArbolN(Generic[T]):
     def recorrido_guiado(self, direcciones: list[int]) -> T:
         pass
 
-if __name__ == '__main__':
+
+def main():
     t = ArbolN(1)
     n2 = ArbolN(2)
     n3 = ArbolN(3)
@@ -132,3 +133,7 @@ if __name__ == '__main__':
     print(f't == t2 {t == t2}')
 
     print(f'recorrido_guiado [2,0,0]: {t2.recorrido_guiado([2,0,0])}')
+
+
+if __name__ == '__main__':
+    main()

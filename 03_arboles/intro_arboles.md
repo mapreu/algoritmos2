@@ -98,20 +98,20 @@ from typing import Generic, Optional, TypeVar
 
 T = TypeVar('T')
 
+class NodoAB(Generic[T]):
+    def __init__(
+        self, 
+        dato: T, 
+        si: Optional[ArbolBinario[T]] = None, 
+        sd: Optional[ArbolBinario[T]] = None
+    ):
+        self.dato: T = dato
+        self.si: ArbolBinario[T] = ArbolBinario() if si is None else si
+        self.sd: ArbolBinario[T] = ArbolBinario() if sd is None else sd
+
 class ArbolBinario(Generic[T]):
-    class NodoAB(Generic[T]):
-        def __init__(
-            self, 
-            dato: T, 
-            si: Optional[ArbolBinario[T]] = None, 
-            sd: Optional[ArbolBinario[T]] = None
-        ):
-            self.dato: T = dato
-            self.si: ArbolBinario[T] = ArbolBinario() if si is None else si
-            self.sd: ArbolBinario[T] = ArbolBinario() if sd is None else sd
-            
     def __init__(self):
-        self.raiz: Optional[ArbolBinario.NodoAB[T]] = None
+        self.raiz: Optional[NodoAB[T]] = None
 
     def es_vacio(self) -> bool:
         return self.raiz is None
@@ -120,7 +120,7 @@ La clase genérica `ArbolBinario` ahora tiene un constructor que sólo permite i
 
 En esta estrategia utilizamos entonces una estructura con **recursión mutua**, donde `ArbolBinario` se compone opcionalmente de un `NodoAB`, mientras que `NodoAB` se compone de 2 objetos de tipo `ArbolBinario`. Es importante notar que el _caso base_ de la estructura recursiva es el _árbol vacío_, donde termina la recursión.
 
-Dado que optamos por _encapsular y ocultar_ la clase `NodoAB`, para generar un árbol no vacío, podríamos definir un **método constructor** estático así:
+Si deseamos _encapsular y ocultar_ la clase `NodoAB` evitando exponerla en el módulo, para generar un árbol no vacío, podríamos definir un **método constructor** estático así:
 
 ```python
 @staticmethod
@@ -130,7 +130,7 @@ def crear_nodo(
     sd: Optional[ArbolBinario[T]] = None
 ) -> ArbolBinario[T]:
     t = ArbolBinario()
-    t.raiz = ArbolBinario.NodoAB(dato, si, sd)
+    t.raiz = NodoAB(dato, si, sd)
     return t
 ```
 Esta operación simplemente instancia un nuevo objeto de `ArbolBinario` (árbol vacío) en `t` y luego le asigna como raíz un objeto de `NodoAB` con la información necesaria a almacenar en ese nodo. Incluso, se podrían pasar subárboles completos para asociar como subárbol izquierdo y derecho.
@@ -150,7 +150,7 @@ Esta versión tiene como desventaja el mantenimiento adicional necesario al mome
 ```python
 class ArbolBinario(Generic[T]):     
     def __init__(self):
-        self.raiz: Optional[ArbolBinario.NodoAB[T]] = None
+        self.raiz: Optional[NodoAB[T]] = None
         self.antecesor: Optional[ArbolBinario[T]] = None
 
     @staticmethod
@@ -160,7 +160,7 @@ class ArbolBinario(Generic[T]):
         sd: Optional[ArbolBinario[T]] = None
     ) -> ArbolBinario[T]:
         t = ArbolBinario()
-        t.raiz = ArbolBinario.NodoAB(dato, si, sd)
+        t.raiz = NodoAB(dato, si, sd)
         t.raiz.si.antecesor = t
         t.raiz.sd.antecesor = t
         return t
@@ -181,7 +181,7 @@ Similar a como ocurre con estructuras lineales, donde el cálculo de la longitud
 ```python
 class ArbolBinario(Generic[T]):     
     def __init__(self):
-        self.raiz: Optional[ArbolBinario.NodoAB[T]] = None
+        self.raiz: Optional[NodoAB[T]] = None
         self.altura: int = 0
 ```
 La inicialización del árbol vacío debería tener siempre altura 0, luego a medida que incorporamos nodos, cada uno de ellos debería modificar su atributo de altura para reflejar el valor real. Esto resulta en una desventaja de rendimiento si tratamos con estructuras muy cambiantes.
@@ -193,8 +193,8 @@ Otra alternativa sería ajustar la estructura para facilitar alguna [estrategia 
 ```python
 class ArbolBinario(Generic[T]):     
     def __init__(self):
-        self.raiz: Optional[ArbolBinario.NodoAB[T]] = None
-        self.sig_inorder: Optional[ArbolBinario.NodoAB[T]] = None
+        self.raiz: Optional[NodoAB[T]] = None
+        self.sig_inorder: Optional[NodoAB[T]] = None
 ```
 El final del recorrido estaría marcado por el atributo `sig_inorder = None`.
 
@@ -221,7 +221,7 @@ def dato(self) -> T:
     return self.raiz.dato
 
 def es_hoja(self) -> bool:
-    return not self.es_vacio() and self.si().es_vacio and self.sd().es_vacio()
+    return not self.es_vacio() and self.si().es_vacio() and self.sd().es_vacio()
 
 ```
 Estas **operaciones proyectoras** nos permiten conocer aspectos básicos de la estructura. `si` y `sd` devuelven los subárboles izquierdo y derecho, respectivamente. `dato` nos entrega la información almacenada en la raíz de ese árbol. `es_hoja` nos indica si el árbol actual es una hoja, es decir, cuando no se trate de un árbol vacío y no tiene subárboles descendientes.
