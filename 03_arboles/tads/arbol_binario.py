@@ -64,6 +64,9 @@ class ArbolBinario(Generic[T]):
         assert self.raiz is not None
         self.raiz.sd = sd
 
+    def set_raiz(self, nodo: NodoAB[T]):
+        self.raiz = nodo
+        
     def altura(self) -> int:
         if self.es_vacio():
             return 0
