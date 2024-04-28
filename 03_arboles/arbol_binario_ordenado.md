@@ -144,7 +144,7 @@ Cuando debemos elimianr un nodo que **sólo tiene un subárbol derecho**, simple
 ![arbol_binario_ordenado_eliminar_sd](./imagenes/arbol_binario_ordenado_eliminar_sd.png)
 
 #### Caso trivial: Eliminar sin descendiente derecho 
-Cuando debemos elimianr un nodo que **sólo tiene un subárbol izquierdo**, simplemente **reemplazamos a ese nodo por su subárbol izquierdo**.
+Cuando debemos eliminar un nodo que **sólo tiene un subárbol izquierdo**, simplemente **reemplazamos a ese nodo por su subárbol izquierdo**.
 
 ![arbol_binario_ordenado_eliminar_si](./imagenes/arbol_binario_ordenado_eliminar_si.png)
 
