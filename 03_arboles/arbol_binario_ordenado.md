@@ -190,11 +190,11 @@ Resumen de los pasos a realizar en la eliminación por copia:
     nodo_M = t.si().max()
     t.set_dato(nodo_M.dato())
     ```
-2. Asignar como subárbol derecho del predecesor del mayor (`pM`) al subárbol izquierdo del mayor `M`.
+2. Asignar como subárbol derecho del predecesor del mayor (`pM`) al subárbol izquierdo del mayor `M`. Contemplar el caso especial donde `M` no tiene predecesor, allí se inserta el subárbol izquierdo de `M` como subárbol izquierdo del nodo eliminado.
 
     ```python
     nodo_pM = nodo_M.predecesor()
-    nodo_pM.insertar_sd(nodo_M.si())
+    nodo_pM.insertar_sd(nodo_M.si())    # si nodo_pM no existe, t.insertar_si(nodo_M.si()
     ```
 
 4. Eliminar el nodo M (se ocupará el Garbage Collector).
