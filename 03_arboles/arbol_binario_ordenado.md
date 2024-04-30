@@ -139,7 +139,7 @@ Cuando debemos **eliminar una hoja**, simplemente **reemplazamos a ese nodo por 
 ![arbol_binario_ordenado_eliminar_hoja](./imagenes/arbol_binario_ordenado_eliminar_hoja.png)
 
 #### Caso trivial: Eliminar sin descendiente izquierdo
-Cuando debemos elimianr un nodo que **sólo tiene un subárbol derecho**, simplemente **reemplazamos a ese nodo por su subárbol derecho**.
+Cuando debemos eliminar un nodo que **sólo tiene un subárbol derecho**, simplemente **reemplazamos a ese nodo por su subárbol derecho**.
 
 ![arbol_binario_ordenado_eliminar_sd](./imagenes/arbol_binario_ordenado_eliminar_sd.png)
 
