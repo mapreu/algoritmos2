@@ -44,7 +44,7 @@ class ArbolH(Generic[T, S]):
         subarbol._tipo_nodo = self._tipo_nodo
         self.subarboles.append(subarbol)
 
-    def insertar_subarbol(self, subarbol: "ArbolH[T,S]"):
+    def insertar_subarbol(self, subarbol: "ArbolH[T,S]")-> None:
         if self.es_hoja():
             raise ValueError("No se pueden insertar subárboles en un nodo hoja")
         if not self._son_mismos_tipos(subarbol):
