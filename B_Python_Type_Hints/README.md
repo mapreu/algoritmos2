@@ -232,7 +232,7 @@ t4 = (1, 2)                                 # ok
 ```
 En este caso podemos ver que el _type checker_ detecta problemas al asignar t1 a objetos de tipo `tuple` que no coincida con la defición. Luego, la definición de `t4` permite tuplas de cualquier cantidad de números enteros. Si quisiéramos aceptar tuplas de cualquier cantidad de elementos de cualquier tipo podríamos usar `tuple[Any, ...]`.
 
-## Subipado estructural
+## Subtipado estructural
 La especicación PEP 484 define el sistema de tipos desde el punto de vista _nominal de subtipos_, una variable tipo `A` puede aceptar la asignación de un objeto de tipo `B` si y sólo si `B` es subclase de `A`.
 
 En la especificación [PEP 544](https://peps.python.org/pep-0544/) se introduce el concepto de **subtipado estructural** donde se permite definir una clase con cierto comportamiento que coincide con otras clases para que el sistema reconozca a la primera como subclase de las últimas. Esto implica que aún sin declarar explícitamente las superclases con una herencia, Python reconoce estructuralmente que la nueva clase es un subtipo de otra a través del comportamiento definido. Se conoce también como **static duck-typing**.
