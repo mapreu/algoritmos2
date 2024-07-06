@@ -208,7 +208,7 @@ Los siguientes tipos de datos son **mutables**:
 
 Entonces debemos tener cuidado al utilizar aquellos tipos de datos mutables cuando buscamos un enfoque funcional. Esto no implica en usar sólo tipos inmutables, porque seguramente necesitáramos definir otro tipo de estructuras, sino que tendremos que evitar mutarlos y procurar instanciar nuevos objetos.
 
-### Clases imnutables
+### Clases inmutables
 En el [acceso a miembros de una clase](../A_Python_POO/README.md#accesibilidad-a-miembros-de-clase), Python no ofrece un mecanismo para ocultar completamente un miembro del acceso público. A su vez Python es muy flexible por lo cual debemos tener mucho cuidado cuando buscamos definir clases propias que sean inmutables. Analicemos algunas técnicas que podemos utilizar para lograrlo.
 
 ### Clases imnutables: Ocultando atributos
