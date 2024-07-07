@@ -211,14 +211,14 @@ Entonces debemos tener cuidado al utilizar aquellos tipos de datos mutables cuan
 ### Clases imnutables
 En el [acceso a miembros de una clase](../A_Python_POO/README.md#accesibilidad-a-miembros-de-clase), Python no ofrece un mecanismo para ocultar completamente un miembro del acceso público. A su vez Python es muy flexible por lo cual debemos tener mucho cuidado cuando buscamos definir clases propias que sean inmutables. Analicemos algunas técnicas que podemos utilizar para lograrlo.
 
-### Clases imnutables: Ocultando atributos
+### Clases inmutables: Ocultando atributos
 La condición más importante, pero no suficiente, sería ocultar los atributos de nuestra clase utilizando la convención de nombre que indica **utilizar como prefijo el guión bajo**. Decimos que no es suficiente porque podríamos alterar el valor de nuestros atributos si los accedemos públicamente, recordemos que es una simple notación que indica a quien consume la clase que no debería hacerlo.
 
 El ejemplo de [ContenedorInmutable](#transitividad) aplica este concepto.
 
 > Existe un **atributo de clase** especial [`__slots__`](https://docs.python.org/3/reference/datamodel.html#object.__slots__) que permite optimizar la creación de instancias en memoria, ya que **podemos asignarle un conjunto fijo de nombres de atributos** que tiene una instancia de esa clase. Por lo tanto, si definimos `__slots__ = ('x', 'y',)` como atributo de una clase significa que un objeto de esa clase sólo podrá tener como atributos a _x_ e _y_.
 
-### Clases imnutables: Properties
+### Clases inmutables: Properties
 Sabemos que en Python existe posibilidad de [convertir atributos en propiedades](../A_Python_POO/README.md#atributos---propiedades) para mejorar el encapsulamiento de la clase. Una estrategia sería **convertir los atributos en propiedades de sólo lectura**, es decir, no definir los _setters_.
 
 ```python
@@ -240,7 +240,7 @@ En este ejemplo, sólo definimos el _getter_ de la propiedad, por lo cual no pue
 
 Las propiedades en Python se implementan por debajo mediante un [descriptor](https://docs.python.org/3/howto/descriptor.html#managed-attributes). No veremos esta funcionalidad en este módulo, pero básicamente los descriptores son **clases que implementan ciertos métodos especiales** que dan comportamiento paricular a los objetos instanciados cuando **se asignan como atributos de una clase**. Diseñar nuestros propios descriptores podría ser una opción más bajo nivel para diseñar clases inmutables.
 
-### Clases imnutables: Métodos especiales `__setattr__` y `__delattr__`
+### Clases inmutables: Métodos especiales `__setattr__` y `__delattr__`
 Cuando intentamos realizar una asignación para un atributo de un objeto, internamente se invoca el método [`__setattr__`](https://docs.python.org/3/reference/datamodel.html#object.__setattr__) que recibe como argumentos: el objeto en sí, el nombre del atributo y el valor a asignarle. Entonces, si sobreescribimos este método en nuestra clase inmutable, podríamos evitar cualquier tipo de asignación en los atributos de la clase. Sólo necesitaríamos invocar el método sin modificar (heredado de `object`) para inicializarlos en el método `__init__`.
 
 El método [`__delattr__`](https://docs.python.org/3/reference/datamodel.html#object.__delattr__) es similar y sólo recibe como argumento el nombre del atributo. Se invoca cuando se intenta eliminar un atributo de un objeto con el comando `del`. Así que también nos serviría para evitar que se eliminen atributos.
@@ -267,7 +267,7 @@ En la inicialización debemos utilizar el `super().__setattr__()` porque el prop
 
 > Si combinamos la sobreescritura de estos métodos con el uso del atributo `__slots__` logramos una **muy buena inmutabilidad** de la clase, por lo menos superficial (recordar el tema de la [transitividad](#transitividad)).
 
-### Clases imnutables: Named Tuples
+### Clases inmutables: Named Tuples
 Las tuplas son un tipo de dato inmutable en Python, por lo cual nos pueden ser útiles para construir nuevos objetos inmutables también. La forma más básica sería asociar valores a una tupla como si fueran los atributos ordenados de mi abstracción de dato, pero eso sería complejo de comprender y mantener eventualmente. Una opción sería utilizar [`namedtuple`](https://docs.python.org/3/library/collections.html#collections.namedtuple) que nos permite generar un objeto subclase de `tuple`, por ende inmutable, pero con los atributos con nombres en lugar de índices.
 
 ```python
@@ -296,7 +296,7 @@ mi_obj                  # MiClaseInmutable(valor1=10, valor2=20) INMUTABLE
 ```
 Debemos agregar `__slots__` para evitar que la clase pueda aceptar nuevos atributos, pero luego podemos definir el comportamiento que deseemos, como en el ejemplo sobreescribiendo el método especial `__repr__`.
 
-### Clases imnutables: dataclasses
+### Clases inmutables: dataclasses
 El módulo [`dataclasses`](https://docs.python.org/3/library/dataclasses.html) provee funcionalidad que implementa automáticamente [**métodos especiales**](../A_Python_POO/README.md#métodos-especiales) en clases que diseñamos. La particularidad es que definimos la estructura de nuestras clases con **variables de clase** con anotaciones de tipo, y luego la función decoradora [`dataclass`](https://docs.python.org/3/library/dataclasses.html#dataclasses.dataclass) genera los atributos de instancia correspondientes implementando el método `__init__()`.
 
 Veamos este ejemplo:
