@@ -844,7 +844,7 @@ El `*iterables` representa una lista de argumentos posicionales (recordar `*args
 A través del uso del `map`, dada una lista de cadenas generar una nueva lista que devuelva la cantidad que tiene de cierta letra (pasada como argumento) cada elemento. Por ejemplo, si queremos contar la letra 'a' en ['casa', 'hogar', 'espacio', 'cuento'] deberíamos obtener [2, 1, 1, 0].
 
 ### filter
-El filtrado de una colección consiste en aplicarle un predicado (función que devuevle un booleano) para generar una **nueva colección** que contiene sólo aquellos elementos de la original donde al aplicarles el predicado retorna _Verdadero_. En Python disponemos de la **función de orden superior** [`filter`](https://docs.python.org/3/library/functions.html#filter) que permite realizar la operación descripta.
+El filtrado de una colección consiste en aplicarle un predicado (función que devuelve un booleano) para generar una **nueva colección** que contiene sólo aquellos elementos de la original donde al aplicarles el predicado retorna _Verdadero_. En Python disponemos de la **función de orden superior** [`filter`](https://docs.python.org/3/library/functions.html#filter) que permite realizar la operación descripta.
 
 Veamos un ejemplo de cómo podríamos filtrar una lista de números para obtener una lista con aquellos que son número par.
 ```python
