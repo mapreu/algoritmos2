@@ -149,7 +149,7 @@ Al igual que con la sumatoria y muchas otras operaciones recursivas, notemos que
 Esta imagen muestra el estado de la pila de ejecución cuando se llega al caso base `factorial(1)`, donde aún quedan apilados todos los casos previos ya que no finalizan hasta se aplique la multiplicación por `n`.
 
 #### Recursión múltiple
-Sucede cuando las referencias a sí mismo superan la unidad. Podemos identificar casos particulaes como **recursión doble** o **recursión triple** si son dos o tres referencias recursivas respectivamente. Un ejemplo común de recursión doble es el de fibonacci.
+Sucede cuando las referencias a sí mismo superan la unidad. Podemos identificar casos particulares como **recursión doble** o **recursión triple** si son dos o tres referencias recursivas respectivamente. Un ejemplo común de recursión doble es el de fibonacci.
 
 ```python
 def fibonacci(n: int) -> int:
