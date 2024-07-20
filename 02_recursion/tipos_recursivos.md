@@ -8,7 +8,7 @@ Al igual que en una operación recursiva, en un tipo recursivo tendremos que mod
 > Los tipos recursivos **necesitan implementarse con punteros**, ya que su naturaleza recursiva implica una **estructura infinita creciente** y es imposible de implementar de forma estática (necesitaríamos memoria infinita para hacerlo).
 
 ## TAD Nat
-Comencemos con un clásico ejemplo sencillo de tipo de dato recursivo. Imaginemos que debemos construir un tipo de dato que represente los números naturales incluyendo el 0. Esta definición implica implementar un tipo de dato infinito, ya que no hemos puesto restricción a un número natural máximo. Veamos cómo podríamos repreentar esta abstracción.
+Comencemos con un clásico ejemplo sencillo de tipo de dato recursivo. Imaginemos que debemos construir un tipo de dato que represente los números naturales incluyendo el 0. Esta definición implica implementar un tipo de dato infinito, ya que no hemos puesto restricción a un número natural máximo. Veamos cómo podríamos representar esta abstracción.
 
 ![representación de naturales](./imagenes/representacion_naturales.png)
 
