@@ -56,7 +56,7 @@ class Suc:
 ```
 En primer lugar establecemos que un objeto de tipo `Nat` puede ser una de las dos abstracciones que mencionamos mediante el uso del tipo `Union` que nos ofrece esta posibilidad. Entonces un objeto de tipo `Nat` puede ser una instancia de tipo `Cero` o `Suc`. Luego definimos ambas clases para modelar estas abstracciones.
 
-La clase `Cero` no necesita una estrucura interna (atributos) ya que estamos modelando el elemento único que representa el cero. Es más, podría ser tranquilamente una clase abstracta ya que no necesitamos múltiples representaciones del número 0. Le sobreescribimos el método [`__repr__()`](../A_Python_POO/README.md#__repr__) para hacer la representación interna más fácil de leer.
+La clase `Cero` no necesita una estructura interna (atributos) ya que estamos modelando el elemento único que representa el cero. Es más, podría ser tranquilamente una clase abstracta ya que no necesitamos múltiples representaciones del número 0. Le sobreescribimos el método [`__repr__()`](../A_Python_POO/README.md#__repr__) para hacer la representación interna más fácil de leer.
 
 La clase `Suc` representa la idea del _Sucesor_ y permite construir representaciones del resto de los números naturales. Su estructura requiere sólo saber cuál es el predecesor que también será de tipo `Nat`, aquí se ve la **recursión indirecta simple de la estructura**. Es indirecta porque `Nat` puede ser de tipo `Suc` y este último se compone de un `Nat`, precisamente una **recursión mutua**. 
 
