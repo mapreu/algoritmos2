@@ -33,7 +33,7 @@ Si a la operación `+1` la definimos como `Sucesor`, podemos representar de form
 | n | Sucesor(...(Sucesor(Cero)) -> con n niveles recursivos de Sucesor |
 
 ### Estructura interna
-Entonces nos queda pensar cómo diseñar una estructura que modele dos tipos de abstracciones: el Cero y el Sucesor. La primera abstracción simplemente identifica el valor mínimo de un número natural, mientas que la segunda permite construir el resto de los números naturales de forma recursiva. Dado que en Python no podemos operar directamente con punteros, veremos una forma de implementarlo con objetos.
+Entonces nos queda pensar cómo diseñar una estructura que modele dos tipos de abstracciones: el Cero y el Sucesor. La primera abstracción simplemente identifica el valor mínimo de un número natural, mientras que la segunda permite construir el resto de los números naturales de forma recursiva. Dado que en Python no podemos operar directamente con punteros, veremos una forma de implementarlo con objetos.
 
 ```python
 from typing import Union, TypeAlias
