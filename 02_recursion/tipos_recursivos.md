@@ -171,7 +171,7 @@ En esta representación tenemos nodos que se componen de un dato de cierto tipo 
 > El dato de un nodo puede ser de **cualquier tipo de dato**, inclusive podría ser otra lista u otro tipo más complejo. Una forma de construir tipos contenedores que permitan esto sería utilizando [generics](../B_Python_Type_Hints/README.md#generics).
 
 ### Estructura interna
-Tal como sucede con el tipo `Nat`, tenemos dos abstracciones a modelar para construir todos los elementos posibles de `Lista`: la lista vacía y agregar un elemento a una lista. Entonces podemos pensar la solucion de forma similar, donde un caso especial es la **lista vacía** y otro caso es la construcción de una lista a partir de otra lista incoporando un nodo nuevo al inicio.
+Tal como sucede con el tipo `Nat`, tenemos dos abstracciones a modelar para construir todos los elementos posibles de `Lista`: la lista vacía y agregar un elemento a una lista. Entonces podemos pensar la solucion de forma similar, donde un caso especial es la **lista vacía** y otro caso es la construcción de una lista a partir de otra lista incorporando un nodo nuevo al inicio.
 
 Veamos antes una versión simple sin validar tipos con [hints](../B_Python_Type_Hints/README.md).
 
